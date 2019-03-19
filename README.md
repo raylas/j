@@ -58,10 +58,11 @@ set enable [exec pass show <your_pass_descriptor>]
 
 ### Connect to host
 
+SSH:
 ``` shell
 j 192.168.100.52
 ```
-
+Telnet:
 ``` shell
 j --telnet 192.168.100.42
 ```
