@@ -2,7 +2,7 @@
 
 ![j in motion](https://raw.githubusercontent.com/raylas/j/master/j.gif)
 
-j is a simple expect script to securely automate the network access of IOS-like networking equipment by leveraging the open-source password manager [pass](https://passwordstore.org).
+j is a simple expect script to securely automate the network login of IOS-like networking equipment by leveraging the open-source password manager [pass](https://passwordstore.org).
 
 Dependencies:
 

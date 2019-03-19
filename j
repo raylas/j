@@ -2,7 +2,7 @@
 #
 # j
 #
-# A simple expect script to securely automate the network access
+# A simple expect script to securely automate the network login
 # of IOS-like networking equipment by leveraging the open-source
 # password manager `pass` (https://passwordstore.org).
 #
