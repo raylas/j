@@ -56,6 +56,13 @@ set password [exec pass show <your_pass_descriptor>]
 set enable [exec pass show <your_pass_descriptor>]
 ```
 
+### Make j executable
+
+``` shell
+chmod +x j
+```
+Also, it's best if you moved `j` to a directory part of PATH.
+
 ### Connect to host
 
 SSH:
