@@ -18,6 +18,7 @@ Functionality:
 Todo:
 
 * Improve error handling
+* Add ability to specify alternate port
 * Add linux sshd destination support
 * Add alternative password manager support
 
