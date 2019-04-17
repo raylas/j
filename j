@@ -8,6 +8,7 @@
 #
 # Dependencies:
 # - expect
+# - pass
 #
 # Written by Raymond Douglas // 2019
 #
