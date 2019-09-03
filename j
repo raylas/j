@@ -17,19 +17,18 @@
 #
 
 if {[llength $argv ] == 0} {
-    puts "usage: j \[--telnet] destination"
+    puts "usage: j \[--t] destination"
     puts "       j --help for help"
     exit 1
 }
 
 if {[lindex $argv 0] == "--help"} {
-    puts "usage: j \[--telnet] destination"
-    puts "       --telnet: specifies telnet host"
+    puts "usage: j \[--t] destination"
+    puts "       --t: specifies telnet host"
     exit 1
 }
 
 proc tlogin {user pass enable} {
-    expect "*sername:"
     send "$user\r"
     expect "*assword:"
     send "$pass\r"
@@ -40,7 +39,6 @@ proc tlogin {user pass enable} {
 }
 
 proc slogin {pass enable} {
-    expect "*assword: "
     send "$pass\r"
     expect "*>"
     send "en\r"
@@ -53,18 +51,32 @@ set username <your_username>
 set password [exec pass show <your_pass_descriptor>]
 set enable [exec pass show <your_pass_descriptor>]
 
-if {[lindex $argv 0] == "--telnet"} {
+if {[lindex $argv 0] == "--t"} {
     set address [lindex $argv 1]
 
     spawn telnet $address
-    tlogin $username $password $enable
-    interact
-    exit 1
+    expect {
+        "Server lookup failure: *" {
+            exit 1
+        }
+        "*sername:" {
+            tlogin $username $password $enable
+            interact
+            exit 1
+        }
+    }
 } else {
     set address [lindex $argv 0]
 
     spawn ssh -o "StrictHostKeyChecking no" $username@$address
-    slogin $password $enable
-    interact
-    exit 1
+    expect {
+        "ssh: Could not resolve hostname *" {
+            exit 1
+        }
+        "*assword:" {
+            slogin $password $enable
+            interact
+            exit 1
+        }
+    }
 }
