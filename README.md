@@ -2,7 +2,7 @@
 
 ![j in motion](https://raw.githubusercontent.com/raylas/j/master/j.gif)
 
-j is a simple expect script to securely automate the network login of IOS-like networking equipment by leveraging the open-source password manager [pass](https://passwordstore.org).
+j is a simple expect script to securely automate the network login of IOS-like and Junos-based networking equipment by leveraging the open-source password manager [pass](https://passwordstore.org).
 
 Dependencies:
 
@@ -13,13 +13,13 @@ Functionality:
 
 * Automatically insert username, password, and enable password during device login
 * Password and enable password are stored securely in the pass `.password-store`
-* Add agrument `--telnet` to specify a telnet destination
+* Add argument `--t` to specify a telnet host
+* Add argument `--j` to specify a junos host
 
 Todo:
 
-* Improve error handling
 * Add ability to specify alternate port
-* Add linux sshd destination support
+* Improve error handling
 * Add alternative password manager support
 
 ## Use
@@ -72,5 +72,5 @@ j 192.168.100.52
 ```
 Telnet:
 ``` shell
-j --telnet 192.168.100.42
+j --t 192.168.100.42
 ```

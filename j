@@ -3,7 +3,7 @@
 # j
 #
 # A simple expect script to securely automate the network login
-# of IOS-like networking equipment by leveraging the open-source
+# of IOS-like and Junos-based networking equipment by leveraging the open-source
 # password manager `pass` (https://passwordstore.org).
 #
 # Dependencies:
@@ -17,14 +17,15 @@
 #
 
 if {[llength $argv ] == 0} {
-    puts "usage: j \[--t] destination"
+    puts "usage: j \[--t] \[--j] destination"
     puts "       j --help for help"
     exit 1
 }
 
 if {[lindex $argv 0] == "--help"} {
-    puts "usage: j \[--t] destination"
+    puts "usage: j \[--t] \[--j] destination"
     puts "       --t: specifies telnet host"
+    puts "       --j: specifies junos host"
     exit 1
 }
 
@@ -46,6 +47,10 @@ proc slogin {pass enable} {
     send "$enable\r"
 }
 
+proc jlogin {pass} {
+    send "$pass\r"
+}
+
 set timeout 20
 set username <your_username>
 set password [exec pass show <your_pass_descriptor>]
@@ -61,6 +66,20 @@ if {[lindex $argv 0] == "--t"} {
         }
         "*sername:" {
             tlogin $username $password $enable
+            interact
+            exit 1
+        }
+    }
+} elseif {[lindex $argv 0] == "--j"} {
+    set address [lindex $argv 1]
+
+    spawn ssh -o "StrictHostKeyChecking no" $username@$address
+    expect {
+        "ssh: Could not resolve hostname *" {
+            exit 1
+        }
+        "*assword:" {
+            jlogin $password
             interact
             exit 1
         }
